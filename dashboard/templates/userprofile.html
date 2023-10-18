@@ -1,0 +1,44 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+
+{% block title %}  leave Managment {% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3>Your Profile</h3>
+            </div>
+            <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <img src="employee_image.jpg" alt="Employee Image" class="img-fluid rounded-circle">
+                        </div>
+                        <div class="col-md-8">
+
+                            <h5>Employee Name: {{u.first_name}}{{last_name}}</h5>
+                            <p>UserName: {{u.username}}</p>
+                            <p>Email: {{u.email}}</p>
+                            <p>Department: Department Placeholder</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock%}

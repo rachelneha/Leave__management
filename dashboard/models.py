@@ -10,8 +10,9 @@ class User(AbstractUser):
     def __str__(self):
         return self.first_name
 
-class Category_of_leave(models.Model):
-    name = models.CharField(max_length=20)
+class CategoryOfLeave(models.Model):
+
+    name = models.CharField(max_length=50)
     total_number = models.IntegerField(null=True)
 
     def __str__(self):
@@ -19,7 +20,7 @@ class Category_of_leave(models.Model):
 
 class Leave(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    category_of_leave = models.ForeignKey(Category_of_leave,on_delete=models.CASCADE)
+    category_of_leave = models.ForeignKey(CategoryOfLeave,on_delete=models.CASCADE)
     duration_of_leave = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
@@ -28,6 +29,7 @@ class Leave(models.Model):
         ('Rejected', 'Rejected'),
              )
     application_status = models.CharField(max_length=50,choices=STATUS,default='Pending')
+    reason_of_leave = models.TextField(verbose_name ="Reason of name",null = True,help_text="Provide a brief description of the reason for the leave.")
 
     def __str__(self):
         return self.category_of_leave
