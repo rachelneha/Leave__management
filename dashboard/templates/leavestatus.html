@@ -1,0 +1,54 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+
+{% block title %}  leave Managment {% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-6">
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h3>Status of Leaves : {{ employee.get_full_name}}</h3>
+
+            </div>
+            {% for l in object_list %}
+            <div class="card-body">
+                <div class="col-md-8 text-align-center">
+                    <h5>Category Name : {{l.category_of_leave.name}}</h5> <br>
+                    <p>Applied for Date : {{l.start_date}}</p>
+                    <p>Number of days : {{l.reason_of_leave}}</p>
+                    <p><strong>Leave status :</strong>
+                    <div class="alert alert-danger col-4">
+                        <strong>{{l.application_status}}!</strong>
+                    </div>
+
+                    </p>
+                    <form action="" method="post">
+
+                        {% csrf_token %}
+                        {{  form.as_p}}
+
+                        <button type="submit">Update status</button>
+                    </form>
+
+                    <hr>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="card-footer">
+
+
+        </div>
+
+    </div>
+</div>
+
+</div>
+{% endblock%}

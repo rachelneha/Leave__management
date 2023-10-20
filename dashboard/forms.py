@@ -12,3 +12,8 @@ class HolidayForm(forms.ModelForm):
     class Meta:
         model = Holidays
         fields = ["name" ,"date"]
+
+class StatusUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Leave
+        fields = ["application_status"]

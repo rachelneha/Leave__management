@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from dashboard.models import User,Leave,Holidays
-from django.contrib.auth import authenticate, login
-from django.views.generic import CreateView,DetailView
-from dashboard.forms import LeaveForm,HolidayForm
+from django.contrib.auth import authenticate, login,logout
+from django.views.generic import CreateView,DetailView,ListView
+from dashboard.forms import LeaveForm,HolidayForm,StatusUpdateForm
+from django.db.models import Count
 
 # Create your views here.
 def signup(request):
@@ -89,11 +90,41 @@ class ProfileView(DetailView):
     template_name = "userprofile.html"
     context_object_name = "u"
 
+    def get_object(self):
+        return self.request.user
+
+
 class LeaveDasnboardView(CreateView):
     model = Leave
     form_class = LeaveForm
     template_name = "dashboard.html"
-    context_object_name = "leave"
+    #context_object_name = "leave"
+    success_url = '/status/'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        Leave_count = Leave.objects.values('category_of_leave__name','category_of_leave__total_number').annotate(total=Count('category_of_leave__name'))
+        Leavee = Leave.objects.all()
+        context['leave'] = Leavee
+        context['leave_count'] = Leave_count
+
+        return context
+
+
+class UserslistView(ListView):
+    model = User
+    template_name = "alluserslist.html"
+    context_object_name = "userd"
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['userd'] = User.objects.all()
+    #     return context
+
 
 
 class HolidayFormCreateView(CreateView):
@@ -101,3 +132,39 @@ class HolidayFormCreateView(CreateView):
     form_class = HolidayForm
     template_name = "holiday.html"
     context_object_name = "Holiday"
+    success_url='/holiday/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['holiday_list'] = Holidays.objects.all()
+        return context
+
+def logout_view(request):
+    logout(request)
+    return redirect('/')
+
+
+class LeaveStatusView(ListView):
+    model = Leave
+    template_name = "leavestatus.html"
+    form_class = StatusUpdateForm
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        return Leave.objects.filter(user_id=user_id)
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        user_id = self.kwargs['pk']
+        context['employee'] = User.objects.get(id=user_id)
+
+        if self.request.method == 'POST':
+
+            form = StatusUpdateForm(self.request.POST)
+            if form.is_valid():
+
+                form.save()
+
+                return redirect('status')
+
+        return context

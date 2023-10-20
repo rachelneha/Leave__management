@@ -1,10 +1,13 @@
-{% extends 'base.html'%}
+{% extends 'baseouter.html'%}
 
 {% block title %} LOGIN {% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-6">
+<div class="row justify-content-center align-items-center mt-5">
+    <div class="card col-8 ">
+        <div class="card-body">
+<div class="row justify-content-center align-items-center ">
+                <div class="col-6 ">
         <form action="" method ="post">
                 {% csrf_token %}
             <div class="mt-4 form-group">
@@ -25,7 +28,9 @@
 
         </form>
     </div>
-
+        </div>
+             </div>
+    </div>
 </div>
 
 {% endblock%}

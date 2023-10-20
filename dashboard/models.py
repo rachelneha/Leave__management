@@ -3,9 +3,9 @@ from django.db import models
 
 # Create your models here.
 class User(AbstractUser):
-    salary = models.DecimalField(max_digits=10, decimal_places=2, null=True)
-    dob = models.DateField(null=True)
-    do_joining = models.DateField(null=True)
+    salary = models.DecimalField(max_digits=10, decimal_places=2, null=True,blank=True)
+    dob = models.DateField(null=True,blank=True)
+    do_joining = models.DateField(null=True,blank=True)
 
     def __str__(self):
         return self.first_name
@@ -19,12 +19,13 @@ class CategoryOfLeave(models.Model):
         return self.name
 
 class Leave(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null = True)
     category_of_leave = models.ForeignKey(CategoryOfLeave,on_delete=models.CASCADE)
     duration_of_leave = models.IntegerField()
     start_date = models.DateField()
     end_date = models.DateField()
     STATUS =(
+        ('Pending', 'Pending'),
         ('Approved', 'Approved'),
         ('Rejected', 'Rejected'),
              )
@@ -32,7 +33,7 @@ class Leave(models.Model):
     reason_of_leave = models.TextField(verbose_name ="Reason of name",null = True,help_text="Provide a brief description of the reason for the leave.")
 
     def __str__(self):
-        return self.category_of_leave
+        return self.category_of_leave.name
 
 class Holidays(models.Model):
     name = models.CharField(max_length=50)

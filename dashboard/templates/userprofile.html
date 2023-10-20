@@ -24,10 +24,12 @@
                         </div>
                         <div class="col-md-8">
 
-                            <h5>Employee Name: {{u.first_name}}{{last_name}}</h5>
+                            <h5>Employee Name: {{u.get_full_name}}</h5>
                             <p>UserName: {{u.username}}</p>
                             <p>Email: {{u.email}}</p>
-                            <p>Department: Department Placeholder</p>
+                            <p>Date of Birth: {{u.dob}}</p>
+                            <p>Date of Joining: {{u.do_joining}}</p>
+                            <p>Salary: {{u.salary}}</p>
 
                     </div>
                 </div>
