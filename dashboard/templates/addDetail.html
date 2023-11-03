@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}  leave Managment {% endblock %}
+
 {% block style %}
 
 body {
@@ -37,22 +38,12 @@ object-fit: cover;
 
 {% block content %}
 
+
 <div class="row">
-    <div class="col-6">
-<div class="user-details">
-        <div class="card">
-
-            <div class="card-header">
-
-                <h3>Your Profile</h3>
-            </div>
-            <div class="card-body">
-
-
 
     <div class="col-6">
 
-
+        <div class="user-details">
             <img src="user.jpg" alt="User" class="user-image">
             <h2>Employee Name: {{u.get_full_name}}</h2>
             <p>UserName: {{u.username}}</p>
@@ -62,17 +53,40 @@ object-fit: cover;
             <p>Salary: {{u.salary}}</p>
 
         </div>
-
-
     </div>
+
+    {% if user.is_superuser %}
+    <div class="col-6">
+    {% if not u.salary %}
+
+        <div class="user-details">
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Edit Employee Details</h2>
+                </div>
+                <div class="card-header">
+                    <form action="" method="post">
+
+                        {% csrf_token %}
+                        {{form|crispy}}
+
+                        <div class="card-header">
+                            <input type="submit" class="btn btn-success">
+                    </form>
+                </div>
             </div>
-            <div class="card-footer">
-
-
-            </div>
-
         </div>
     </div>
+    {% else %}
+    <div class="card">
+        <h5>Details are already added</h5>
+    </div>
+    {% endif %}
 
 </div>
+
+{% endif %}
+</div>
+
 {% endblock%}

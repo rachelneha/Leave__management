@@ -1,0 +1,80 @@
+{% extends 'base.html'%}
+{% load crispy_forms_tags %}
+
+{% block title %}  leave Managment {% endblock %}
+
+{% block style %}
+
+body {
+font-family: Arial, sans-serif;
+background-color: #e0e0e0;
+}
+
+.type {
+<!--            width: 50%;-->
+margin: 0 auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 5px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+{% endblock %}
+
+{% block content %}
+
+{% if user.is_superuser %}
+<div class="row mt-4">
+    <div class="col-5">
+        <div class="card type">
+            <div class="card-header">
+                <p><strong>Add Leave Types</strong></p>
+            </div>
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <div class="card-footer">
+
+                        <input type="Submit" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="col-7">
+    <div class="card">
+        <div class="card-header">
+            <p><strong>Leaves Available</strong></p>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th>Category of Leave</th>
+                    <th>Number of days</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for l in object_list %}
+                <tr>
+                    <td> {{ l.name}}</td>
+                    <td> {{ l.total_number}}</td>
+
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock%}

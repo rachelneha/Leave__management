@@ -25,19 +25,20 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 {% if user.is_superuser %}
 <div class="row">
     <div class="col-md-6 mx-4 my-4">
-        <div class="card status">
+        <div class="card ">
             {% if not object_list %}
             <div class="card-header">
                 <h3>There are no leave applications</h3>
             </div>
             {% else %}
-            <div class="card-header">
-                <h3>Status of Leaves: {{ employee.get_full_name }}</h3>
-            </div>
+
             {% for l in object_list %}
             <div class="card-body">
                 <div class="row">
+
                     <div class="col-md-8">
+                        <h4>User Name: {{l.user.get_full_name}} </h4> <br>
+
                         <h5>Category Name: {{ l.category_of_leave.name }}</h5>
                         <div class="alert {% if l.application_status == 'Pending' %}alert-warning{% endif %}{% if l.application_status == 'Approved' %}alert-success{% endif %}{% if l.application_status == 'Rejected' %}alert-danger{% endif %} col-4">
                             <strong>{{ l.application_status }}!</strong>
@@ -45,14 +46,11 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                         <p>Applied for Date: {{ l.start_date }}</p>
                         <p>Number of days: {{ l.duration_of_leave }}</p>
                     </div>
-                    <div class="col-md-4">
-                        <form action="" method="post">
-                            {% csrf_token %}
-                            {{ form|crispy }}
-                            <input type="hidden" name="pk" value="{{ l.id }}">
-                            <button type="submit" class="btn btn-primary">Update status</button>
-                        </form>
+                    <div class="col-3">
+                        <a href="{% url 'request' l.id%}" class="btn btn-primary"> Update Status</a>
                     </div>
+
+
                 </div>
                 <hr>
             </div>

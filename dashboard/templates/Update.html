@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Leave Management{% endblock %}
+
+{% block style %}
+
+body {
+font-family: Arial, sans-serif;
+background-color: #e0e0e0;
+}
+
+.status {
+<!--            width: 50%;-->
+margin: 0 auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 5px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+{% endblock %}
+
+{% block content %}
+<div class="row">
+
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h5>Update Leave Staus</h5></div>
+            <div class="card-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy}}
+
+
+                    <div class="card-footer">
+                        <input type="submit" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+{% endblock %}

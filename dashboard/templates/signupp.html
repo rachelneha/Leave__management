@@ -1,0 +1,35 @@
+{% extends 'baseouter.html'%}
+{% load crispy_forms_tags %}
+
+{% block title %}  Sign Up {% endblock %}
+
+{% block style %}
+
+
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h4>Fill the Form</h4>
+            </div>
+            <div class="card-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="card-footer">
+                        <input type="submit" class="btn btn-success">
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+{% endblock%}
