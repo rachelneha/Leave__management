@@ -9,6 +9,23 @@ class LeaveForm(forms.ModelForm):
             "category_of_leave","duration_of_leave","start_date","end_date", "reason_of_leave",
                 ]
 
+        def clean(self):
+            cleaned_data = super().clean()
+            category_of_leave = cleaned_data.get("category_of_leave")
+            duration_of_leave = cleaned_data.get("duration_of_leave")
+
+            if category_of_leave:
+                total_duration = Leave.objects.filter(
+                    user=self.instance.user, application_status__in=['Approved', 'Pending'],
+                    category_of_leave=category_of_leave
+                ).aggregate(total_duration=Sum('duration_of_leave'))['total_duration'] or 0
+
+                if total_duration + duration_of_leave > category_of_leave.total_number:
+                    raise forms.ValidationError("Duration exceeds the total limit for this category.")
+
+            return cleaned_data
+
+
 class HolidayForm(forms.ModelForm):
     class Meta:
         model = Holidays
