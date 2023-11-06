@@ -1,42 +1,40 @@
-{% extends 'baseouter.html'%}
+{% extends 'baseouter.html' %}
 
 {% block title %} LOGIN {% endblock %}
 
 {% block style %}
-
-
-
+<style>
+    /* You can add custom CSS styles here if needed */
+</style>
 {% endblock %}
 
 {% block content %}
 <div class="row justify-content-center align-items-center mt-5">
-    <div class="card col-8 ">
+    <div class="card col-12 col-md-8 col-lg-6">
         <div class="card-body">
-<div class="row justify-content-center align-items-center ">
-                <div class="col-6 ">
-        <form action="" method ="post">
-                {% csrf_token %}
-            <div class="mt-4 form-group">
-                <label for="username" class="form-label">UserName</label>
-                <input type="text" id="username" class="form-control" placeholder="UserName" name="username" required>
-                <small class="form-text text-danger">{{errors.username}}</small>
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 col-sm-10 col-md-8"> 
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="mt-4 form-group">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" id="username" class="form-control" placeholder="Username" name="username" required>
+                            <small class="form-text text-danger">{{errors.username}}</small>
+                        </div>
+                        <div class="mt-4 form-group">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Password" name="password" required>
+                            <small class="form-text text-danger">{{errors.password}}</small>
+                        </div>
+                        <div class="mt-4 form-group">
+                            <input type="submit" class="btn btn-success" value="Submit">
+                            <a href="{% url 'signup' %}" class="btn btn-primary">Register as a new Employee</a>
+                            <small class="form-text text-danger">{{errors.InvalidUser_Pass}}</small>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class=" mt-4 form-group">
-                <label for="password" class="form-label">Password</label>
-                <input type="text" id="password" class="form-control" placeholder="Password" name="password" required>
-                <small class="form-text text-danger">{{errors.password}}</small>
-            </div>
-            <div class="mt-4 form-group">
-                <input type="submit" class="btn btn-success" value="submit">
-                 <a href="{% url 'signup' %}" class="btn btn-primary">Register as a new Employee</a>
-                <small class="form-text text-danger">{{errors.InvalidUser_Pass}}</small>
-            </div>
-
-        </form>
-    </div>
         </div>
-             </div>
     </div>
 </div>
-
-{% endblock%}
+{% endblock %}
