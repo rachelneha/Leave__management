@@ -183,12 +183,11 @@ class LeaveDasnboardView(CreateView):
     form_class = LeaveForm
     template_name = "dashboard.html"
     # context_object_name = "leave"
-    success_url = '/dashboard/'
+    success_url = '/dashboard/?success=true'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

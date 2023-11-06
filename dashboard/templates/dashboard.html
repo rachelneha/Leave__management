@@ -35,56 +35,60 @@ box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                     <div class="card-body">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <div class="card-footer">
-                            <input type="submit" value="submit" class="btn btn-success">
+                    </div>
+
+                    <div class="card-footer">
+                        <input type="submit" value="submit" class="btn btn-success">
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                        {% endif %}
+                    </div>
+
                 </form>
             </div>
         </div>
 
     </div>
-</div>
-</div>
-<div class="col-7 ">
-    <div class="card user-details">
-        <div class="card-header">
-            <div class="mt-4 md-4 text-center">
-                <h3> Leave Requests</h3> <br>
-                <hr>
-            </div>
-            <div class="card-body">
-                <table class="table table-hover table-striped">
-                    <thead>
-                    <tr>
-                        <th>Leave Type</th>
-                        <th>Total</th>
-                        <th>Remaining days</th>
-                        <th> Consumed</th>
+    <div class="col-7 ">
+        <div class="card user-details">
+            <div class="card-header">
+                <div class="mt-4 md-4 text-center">
+                    <h3> Leave Requests</h3> <br>
+                    <hr>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <tr>
+                            <th>Leave Type</th>
+                            <th>Total</th>
+                            <th>Remaining days</th>
+                            <th> Consumed</th>
 
 
-                    </tr>
-                    </thead>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    {% for item in new_list %}
-                    <tr>
-                        <td>{{item.name}}</td>
-                        <td>{{item.total_number}}</td>
-                        <td>{{ item.remaining_days}}</td>
-                        <td>{{item.consumed}}</td>
+                        <tbody>
+                        {% for item in new_list %}
+                        <tr>
+                            <td>{{item.name}}</td>
+                            <td>{{item.total_number}}</td>
+                            <td>{{ item.remaining_days}}</td>
+                            <td>{{item.consumed}}</td>
 
 
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer">
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-
 
 <div class="row mt-4 justify-content-center">
     <div class="col-10 user-details">
